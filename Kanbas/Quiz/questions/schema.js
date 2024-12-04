@@ -9,8 +9,8 @@ const questionSchema = new mongoose.Schema({
     Option: [{ type: String }],
     question: String,
     type: String,
-    
+    points: Number,
   },
   { collection: "questions" }
 );
-export default questionSchema;
+export default questionSchema
