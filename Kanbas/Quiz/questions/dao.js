@@ -1,9 +1,13 @@
 import model from "./model.js";
 
-//Implemented some necessary functions for now
-//All can be modified based on actual needs
+// Retrieve all questions
 export const findAllQuestions = () => model.find();
-export const createQuestion = (question) => {
-    return model.create(question)
-};
+
+// Create a new question
+export const createQuestion = (question) => model.create(question);
+
+// Find a question by ID
 export const findQuestionById = (questionId) => model.findById(questionId);
+
+// Find questions by quiz ID
+export const findQuestionsByQuizId = (quizId) => model.find({ quizId: quizId });

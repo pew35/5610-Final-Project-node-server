@@ -1,10 +1,17 @@
 import model from "./model.js";
 
-//Implemented some necessary functions for now
-//All can be modified based on actual needs
+// Retrieve all quizzes
 export const findAllQuizzes = () => model.find();
-export const createQuiz = (quiz) => {
-    //Todo: Finish create quiz with necessary quizId and other fields
-    return model.create(quiz)
-};
+
+// Create a new quiz
+export const createQuiz = (quiz) => model.create(quiz);
+
+// Find a quiz by ID
 export const findQuizById = (quizId) => model.findById(quizId);
+
+// Update a quiz by ID
+export const updateQuizById = (quizId, updatedQuiz) =>
+    model.findByIdAndUpdate(quizId, updatedQuiz, { new: true });
+
+// Delete a quiz by ID
+export const deleteQuizById = (quizId) => model.findByIdAndDelete(quizId);
