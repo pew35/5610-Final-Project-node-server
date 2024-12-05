@@ -8,4 +8,17 @@ export default function AttemptAnswerRoutes(app) {
     }
     app.get("/api/attemptAnswers", findAllAttemptAnswers);
 
+    const findAttemptAnswersByQuestion = async (req, res) => {
+        const {questionId} = req.params;
+        const attemptAnswers = await attemptAnswerDao.findAttemptAnswersByQuestion(questionId);
+        res.json(attemptAnswers);
+    }
+    app.get("/api/questions/:questionId/attemptAnswers", findAttemptAnswersByQuestion);
+
+    const findAttemptAnswersByAttempt = async (req, res) => {
+        const {attemptId} = req.params;
+        const attemptAnswers = await attemptAnswerDao.findAttemptAnswersByAttempt(attemptId);
+        res.json(attemptAnswers);
+    }
+    app.get("/api/attempts/:attemptId/attemptAnswers", findAttemptAnswersByAttempt);
 }

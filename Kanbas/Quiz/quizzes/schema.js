@@ -11,7 +11,8 @@ const quizSchema = new mongoose.Schema({
     dueDate: String,
     points: Number,
     numberOfQuestions: Number,
-    timeLimit: Number
+    timeLimit: Number,
+    courseId: String
   },
   { collection: "quizzes" }
 );
