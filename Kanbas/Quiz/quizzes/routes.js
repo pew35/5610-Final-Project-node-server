@@ -19,6 +19,7 @@ export default function QuizRoutes(app) {
         const quiz = await quizDao.findQuizById(req.params.quizId)
         res.json(quiz)
     }
+    app.get("/api/courses/:courseId/quizzes/:quizId", findQuizById);
     app.get("/api/quizzes/:quizId", findQuizById);
 
     const findQuizesForCourse = async (req, res) => {
