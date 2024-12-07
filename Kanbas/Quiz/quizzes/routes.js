@@ -1,41 +1,62 @@
 import * as quizDao from "./dao.js";
 
+//Todo: add more necessary routes
 export default function QuizRoutes(app) {
-    // Get all quizzes
     const findAllQuizzes = async (req, res) => {
         const quizzes = await quizDao.findAllQuizzes();
         res.json(quizzes);
-    };
+    }
     app.get("/api/quizzes", findAllQuizzes);
 
-    // Create a new quiz
     const createQuiz = async (req, res) => {
-        const quiz = await quizDao.createQuiz(req.body);
+        const {courseId} = req.params;
+        const quiz = await quizDao.createQuiz(courseId, req.body);
         res.json(quiz);
-    };
+      };
     app.post("/api/quizzes", createQuiz);
 
-    // Get a quiz by ID
     const findQuizById = async (req, res) => {
-        const quiz = await quizDao.findQuizById(req.params.quizId);
-        res.json(quiz);
-    };
+        const quiz = await quizDao.findQuizById(req.params.quizId)
+        res.json(quiz)
+    }
     app.get("/api/quizzes/:quizId", findQuizById);
 
-    // Update a quiz by ID
-    const updateQuizById = async (req, res) => {
-        const updatedQuiz = await quizDao.updateQuizById(
-            req.params.quizId,
-            req.body
-        );
-        res.json(updatedQuiz);
-    };
-    app.put("/api/quizzes/:quizId", updateQuizById);
+    const findQuizesForCourse = async (req, res) => {
+          const { courseId } = req.params;
+          const quizes = await quizDao.findQuizesForCourse(courseId);
+          res.json(quizes);
+    }
+    app.get("/api/courses/:courseId/quizzes", findQuizesForCourse)
 
-    // Delete a quiz by ID
-    const deleteQuizById = async (req, res) => {
-        await quizDao.deleteQuizById(req.params.quizId);
-        res.sendStatus(200);
-    };
-    app.delete("/api/quizzes/:quizId", deleteQuizById);
+    const updateQuiz = async (req, res) => {
+        const { quizId } = req.params;
+        let quiz = req.body;
+        quiz = await quizDao.updateQuiz(qid, quizId);
+        res.json(quiz);
+    }
+    app.put("/api/quizzes/:quizId", updateQuiz);
+
+    const deleteQuiz = async (req, res) => {
+        const { quizId } = req.params;
+        await quizDao.deleteQuiz(quizId);
+    }
+    app.delete("/api/quizzes/:quizId", deleteQuiz);
+
+    const publishQuiz = async (req, res) => {
+        const { quizId } = req.params;
+          const quiz = await quizDao.findQuizById(quizId);
+          quiz.publish = true;
+          await quizDao.updateQuiz(quizId, quiz);
+          res.json(quiz);
+    }
+    app.get("/api/quizzes/:quizId/publish", publishQuiz);
+    
+    const unpublishQuiz = async (req, res) => {
+        const { quizId } = req.params;
+          const quiz = await quizDao.findQuizById(quizId);
+          quiz.publish = false;
+          await quizDao.updateQuiz(quizId, quiz);
+          res.json(quiz);
+    }
+    app.get("/api/quizzes/:quizId/unpublish", unpublishQuiz);
 }

@@ -1,17 +1,13 @@
 import model from "./model.js";
 
-// Retrieve all quizzes
+//Implemented some necessary functions for now
+//All can be modified based on actual needs
 export const findAllQuizzes = () => model.find();
-
-// Create a new quiz
-export const createQuiz = (quiz) => model.create(quiz);
-
-// Find a quiz by ID
+export const createQuiz = (courseId, quiz) => {
+    quiz.courseId = courseId;
+    return model.create(quiz)
+};
 export const findQuizById = (quizId) => model.findById(quizId);
-
-// Update a quiz by ID
-export const updateQuizById = (quizId, updatedQuiz) =>
-    model.findByIdAndUpdate(quizId, updatedQuiz, { new: true });
-
-// Delete a quiz by ID
-export const deleteQuizById = (quizId) => model.findByIdAndDelete(quizId);
+export const findQuizesForCourse =  (courseId) => model.find({ courseId: courseId});
+export const updateQuiz =  (id, quiz) =>  model.updateOne({ _id: id }, { $set: quiz });
+export const deleteQuiz =  (id) =>  model.deleteOne({ _id: id });
