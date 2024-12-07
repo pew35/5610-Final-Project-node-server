@@ -1,13 +1,12 @@
 import model from "./model.js";
 
-// Retrieve all attempts
+//Implemented some necessary functions for now
+//All can be modified based on actual needs
 export const findAllAttempts = () => model.find();
-
-// Create a new attempt
-export const createAttempt = (attempt) => model.create(attempt);
-
-// Find an attempt by ID
+export const createAttempt = (attempt) => {
+    return model.create(attempt)
+};
 export const findAttemptById = (attemptId) => model.findById(attemptId);
-
-// Find attempts by quiz ID
-export const findAttemptByQuizId = (quizId) => model.find({ quizID: quizId });
+export const findAttemptByQuizId = (quizId) => {
+    return model.find({quizId: quizId})
+};
