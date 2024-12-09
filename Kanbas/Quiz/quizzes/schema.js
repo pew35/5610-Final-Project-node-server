@@ -4,7 +4,7 @@ const quizSchema = new mongoose.Schema({
     _id: String,
     title: String,
     description: String,
-    publish: Boolean,
+    publish: {type:Boolean, default: false},
     attempts: Number,
     availableDate: String,
     availableUntilDate: String,
