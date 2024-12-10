@@ -10,3 +10,6 @@ export const findAttemptById = (attemptId) => model.findById(attemptId);
 export const findAttemptByQuizId = (quizId) => {
     return model.find({quizId: quizId})
 };
+export const findAttemptByUserAndQuiz = async (userId, quizId) => {
+    return model.find({ userId, quizId });
+};
