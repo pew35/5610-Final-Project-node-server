@@ -6,7 +6,7 @@ const questionSchema = new mongoose.Schema({
     //For multiple choice, options are "a", "b", "c"
     //For True or False, options are "true", "false", case insensitive
     //For Fill in the blank, options are empty
-    Option: [{ type: String }],
+    option: [{ type: String }],
     question: String,
     type: String,
     points: Number,

@@ -28,4 +28,19 @@ export default function AttemptRoutes(app) {
     }
     //needs modification, not sure about the url/if needed in the program
     app.get("/api/:quizId/attempts", findAttemptByQuizId)
+
+    const findAttemptByUserAndQuiz = async (req, res) => {
+        const { userId, quizId } = req.body; 
+        if (!userId || !quizId) {
+            return res.status(400).send({ error: "userId and quizId are required" });
+        }
+        try {
+            const attempts = await findAttemptByUserAndQuiz(userId, quizId, res);
+            res.json(attempts);
+        } catch (error) {
+            res.status(500).send("Error fetching attempts");
+        }
+    }
+    app.get(`/api/attempts`, findAttemptByUserAndQuiz);
+
 }
