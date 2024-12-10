@@ -35,7 +35,7 @@ export default function AttemptRoutes(app) {
             return res.status(400).send({ error: "userId and quizId are required" });
         }
         try {
-            const attempts = await findAttemptByUserAndQuiz(userId, quizId, res);
+            const attempts = await findAttemptByUserAndQuiz(userId, quizId);
             res.json(attempts);
         } catch (error) {
             res.status(500).send("Error fetching attempts");
