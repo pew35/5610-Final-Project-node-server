@@ -24,6 +24,7 @@ export default function QuestionRoutes(app) {
     app.get("/api/questions/:questionId", findQuestionById);
 
     const createQuestion = async (req, res) => {
+        console.log("Creating question: ", req.body)
         const question = await questionDao.createQuestion(req.body);
         res.json(question);
     }
