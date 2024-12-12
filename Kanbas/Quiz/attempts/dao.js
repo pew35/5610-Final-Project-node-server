@@ -14,12 +14,12 @@ export const findAttemptByUserAndQuiz = async (userId, quizId) => {
     return model.find({ userId, quizId });
 };
 
-const getLatestAttempt = async (AttemptsModel, cid, uid) => {
+export const findLatestAttemptByUserAndQuiz = async (userId, quizId) => {
     try {
         // Query the database for attempts matching the courseId and userId
-        const latestAttempt = await AttemptsModel.findOne({
-            courseId: cid,
-            userId: uid,
+        const latestAttempt = await model.findOne({
+            quizId: quizId,
+            userId: userId,
         })
             .sort({ date: -1 }) // Sort by date in descending order
             .exec(); // Execute the query

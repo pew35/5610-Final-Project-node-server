@@ -26,22 +26,39 @@ export default function AttemptRoutes(app) {
         const attempts = await attemptDao.findAttemptByQuizId(quizId)
         res.json(attempts)
     }
-    app.get("/api/quizzes:quizId/attempts", findAttemptByQuizId)
+    app.get("/api/quizzes/:quizId/attempts", findAttemptByQuizId)
 
 
     const findAttemptByUserAndQuiz = async (req, res) => {
-        const { userId, quizId } = req.body; 
+        const { userID: userId, quizID: quizId } = req.params; 
         if (!userId || !quizId) {
-            return res.status(400).send({ error: "userId and quizId are required" });
+            console.log(userId, quizId,"hello");
+            return res.status(404).send({ error: "userId and quizId are required" });
         }
         try {
-            const attempts = await findAttemptByUserAndQuiz(userId, quizId);
+            const attempts = await attemptDao.findAttemptByUserAndQuiz(userId, quizId);
             res.json(attempts);
         } catch (error) {
             res.status(500).send("Error fetching attempts");
         }
+        
     }
-    app.get(`/api/attempts`, findAttemptByUserAndQuiz);
+    app.get(`/api/quizzes/:quizID/:userID/attempts`, findAttemptByUserAndQuiz);
 
+    const findLatestAttemptByUserAndQuiz = async (req, res) => {
+        const { userID: userId, quizID: quizId } = req.params; 
+        if (!userId || !quizId) {
+            console.log(userId, quizId,"hello");
+            return res.status(404).send({ error: "userId and quizId are required" });
+        }
+        try {
+            const attempts = await attemptDao.findLatestAttemptByUserAndQuiz(userId, quizId);
+            res.json(attempts);
+        } catch (error) {
+            res.status(500).send("Error fetching attempts");
+        }
+        
+    }
+    app.get(`/api/quizzes/:quizID/:userID/latestattempts`, findLatestAttemptByUserAndQuiz);
 
 }
