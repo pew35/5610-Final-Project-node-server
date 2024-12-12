@@ -27,5 +27,5 @@ export default function AttemptRoutes(app) {
         res.json(attempts)
     }
     //needs modification, not sure about the url/if needed in the program
-    app.get("/api/:quizId/attempts", findAttemptByQuizId)
+    app.get("/api/quizzes:quizId/attempts", findAttemptByQuizId)
 }
