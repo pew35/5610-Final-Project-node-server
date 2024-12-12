@@ -7,8 +7,7 @@ export const findQuestionByQuiz = (quizId) => model.find({ quizId: quizId });
 export const findQuestionById = (questionId) => model.findById(questionId);
 //not sure if needed or not
 //export const findQuestionsByType = (type, quizID) => model.find({ questionType: type, quizID: quizID });
-export const createQuestion = (quizId, question) => {
-    question.quizID = quizId;
+export const createQuestion = (question) => {
     return model.create(question)
 };
 export const deleteQuestion = (id) => model.deleteOne({ _id: id });

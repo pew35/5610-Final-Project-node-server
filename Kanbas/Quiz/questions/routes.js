@@ -24,6 +24,7 @@ export default function QuestionRoutes(app) {
     app.get("/api/questions/:questionId", findQuestionById);
 
     const createQuestion = async (req, res) => {
+        console.log("Creating question: ", req.body)
         const question = await questionDao.createQuestion(req.body);
         res.json(question);
     }
@@ -38,7 +39,8 @@ export default function QuestionRoutes(app) {
     app.put('/api/quizzes/:quizId/questions/:questionId', updateQuestion);
 
     const deleteQuestion = async (req, res) => {
-        const { questionId } = req.params;
+        onsole.log("Deleting question ID:", req.params.questionId);
+        const { quizId, questionId } = req.params;
         await questionDao.deleteQuestion(questionId);
     }
     app.delete('/api/quizzes/:quizId/questions/:questionId', deleteQuestion);
