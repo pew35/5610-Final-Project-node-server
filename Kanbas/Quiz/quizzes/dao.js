@@ -12,4 +12,4 @@ export const findQuizesForCourse =  (courseId) => model.find({ courseId: courseI
 export const updateQuiz =  (id, quiz) =>  model.updateOne({ _id: id }, { $set: quiz });
 export const deleteQuiz =  (id) =>  model.deleteOne({ _id: id });
 export const findPublishedQuizesForCourse =  (courseId) => 
-    model.find({ courseId: courseId, published: true });
+    model.find({ courseId: courseId, publish: true });

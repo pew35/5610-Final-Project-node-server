@@ -25,8 +25,11 @@ export default function QuizRoutes(app) {
     const findQuizesForCourse = async (req, res) => {
         const { courseId } = req.params;
         const { published } = req.query;
+        
         if (published === 'true') {
+            
             const quizes = await quizDao.findPublishedQuizesForCourse(courseId);
+            console.log(quizes);
             res.json(quizes);
             return;
         }
