@@ -40,12 +40,31 @@ export default function QuestionRoutes(app) {
         }
     };
 
+    const updateQuizQuestionCount = async (quizId) => {
+        try {
+            console.log('quizId is', quizId);
+            const allQuestions = await questionDao.findQuestionByQuiz(quizId);
+    
+            if (!Array.isArray(allQuestions)) {
+                throw new Error("Questions not found or invalid response.");
+            }
+    
+            const questionCount = allQuestions.length; // Count the number of questions
+            await quizDao.updateQuiz(quizId, { numberOfQuestions: questionCount }); // Update with question count
+    
+            console.log(`Updated question count for quizId=${quizId}: ${questionCount}`);
+        } catch (error) {
+            console.error(`Error updating question count for quizId=${quizId}:`, error);
+        }
+    };
+
     const createQuestion = async (req, res) => {
         const { quizId } = req.params;
         console.log("Creating question: for quiz id", req.params, req.body)
         const question = await questionDao.createQuestion(req.body);
         // update quiz points if question is added
         await updateQuizPoints(quizId);
+        await updateQuizQuestionCount(quizId);
         res.json(question);
     }
     app.post("/api/quizzes/:quizId/questions", createQuestion);
@@ -57,6 +76,7 @@ export default function QuestionRoutes(app) {
         question = await questionDao.updateQuestion(questionId, question);
         // update quiz points in case question point is  modified
         await updateQuizPoints(quizId);
+        await updateQuizQuestionCount(quizId);
         res.json(question);
     }
     app.put('/api/quizzes/:quizId/questions/:questionId', updateQuestion);
@@ -66,6 +86,7 @@ export default function QuestionRoutes(app) {
         await questionDao.deleteQuestion(questionId);
         // update quiz points in case question is deleted
         await updateQuizPoints(quizId);
+        await updateQuizQuestionCount(quizId);
         console.log("Deleting question ID successfully:", req.params.questionId);
     }
     app.delete('/api/quizzes/:quizId/questions/:questionId', deleteQuestion);
