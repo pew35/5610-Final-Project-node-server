@@ -30,3 +30,18 @@ export const findLatestAttemptByUserAndQuiz = async (userId, quizId) => {
         throw error;
     }
 };
+
+export const updateAttempt = async (attemptId, updates) => {
+    try {
+        const updatedAttempt = await model.findByIdAndUpdate(
+            attemptId,
+            { $set: updates }, 
+            { new: true, runValidators: true }
+        );
+        return updatedAttempt;
+    } catch (error) {
+        console.error("Error updating answers in DAO:", error);
+        throw error; 
+    }
+};
+
