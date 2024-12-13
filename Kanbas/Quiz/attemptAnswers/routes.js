@@ -21,4 +21,18 @@ export default function AttemptAnswerRoutes(app) {
         res.json(attemptAnswers);
     }
     app.get("/api/attempts/:attemptId/attemptAnswers", findAttemptAnswersByAttempt);
+
+    const saveAnswer = async (req, res) => {
+        const answerData = req.body; // Extract answer data from the request body
+        try {
+            const savedAnswer = await attemptAnswerDao.saveAnswer(answerData); // Call DAO method to save answer
+            res.status(201).json(savedAnswer); // Respond with the saved answer and status 201
+        } catch (error) {
+            console.error("Error saving answer:", error);
+            res.status(500).send("Error saving answer");
+        }
+    };
+
+    // POST route for saving an answer
+    app.post('/api/attemptAnswers', saveAnswer);
 }
