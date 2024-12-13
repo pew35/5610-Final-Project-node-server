@@ -33,15 +33,16 @@ export default function QuestionRoutes(app) {
     const updateQuestion = async (req, res) => {
         const { questionId } = req.params;
         let question = req.body;
+        console.log("Updating question ", questionId, question)
         question = await questionDao.updateQuestion(questionId, question);
         res.json(question);
     }
     app.put('/api/quizzes/:quizId/questions/:questionId', updateQuestion);
 
     const deleteQuestion = async (req, res) => {
-        console.log("Deleting question ID:", req.params.questionId);
         const { quizId, questionId } = req.params;
         await questionDao.deleteQuestion(questionId);
+        console.log("Deleting question ID successfully:", req.params.questionId);
     }
     app.delete('/api/quizzes/:quizId/questions/:questionId', deleteQuestion);
 }
