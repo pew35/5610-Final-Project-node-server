@@ -67,4 +67,15 @@ export default function QuizRoutes(app) {
         res.json(quiz);
     }
     app.get("/api/quizzes/:quizId/unpublish", unpublishQuiz);
+
+    const updateQuizPoints = async (quizId) => {
+        // Get all questions for the quiz
+        const allQuestions = await questionDao.getQuestionsByQuizId(quizId);
+        // Calculate the total points
+        const totalPoints = allQuestions.reduce((sum, question) => sum + (question.points || 0), 0);
+        // Update the quiz's totalPoints
+        await quizDao.updateQuiz(quizId, { totalPoints });
+        console.log(`Updated total points for quiz ${quizId}: ${totalPoints}`);
+    };
+
 }
