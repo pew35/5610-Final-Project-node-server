@@ -17,7 +17,9 @@ export default function AttemptAnswerRoutes(app) {
 
     const findAttemptAnswersByAttempt = async (req, res) => {
         const {attemptId} = req.params;
+        console.log(attemptId);
         const attemptAnswers = await attemptAnswerDao.findAttemptAnswersByAttempt(attemptId);
+        console.log("attemptAnswers for latest: ",attemptAnswers);
         res.json(attemptAnswers);
     }
     app.get("/api/attempts/:attemptId/attemptAnswers", findAttemptAnswersByAttempt);
